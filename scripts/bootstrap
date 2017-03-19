@@ -1,0 +1,10 @@
+#!/bin/bash
+
+apt-get update && apt-get install -y curl jq python python-pip
+pip install -U pip tox
+
+## Get latest rancher-catalog
+download_url=$(curl https://api.github.com/repos/lmangani/catalog-dockerfiles/releases/latest | jq -r '.assets[]| select(.name == "qxip-catalog-service.tar.xz")| .browser_download_url')
+curl -sL -o /tmp/qxip-catalog-service.tar.xz ${download_url}
+tar -xJf /tmp/qxip-catalog-service.tar.xz -C /usr/bin/
+
